@@ -1,0 +1,82 @@
+# Apply to all files without commiting:
+#   pre-commit run --all-files
+# Update this file:
+#   pre-commit autoupdate
+default_language_version:
+  python: python3
+fail_fast: true
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-xml
+      - id: debug-statements
+      - id: detect-aws-credentials
+        args:
+          - --allow-missing-credentials
+      - id: detect-private-key
+      - id: end-of-file-fixer
+        exclude: files/(issue|motd)
+      - id: mixed-line-ending
+        args:
+          - --fix=lf
+      #      - id: pretty-format-json
+      #        args:
+      #          - --autofix
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+
+  # Text file hooks
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.5.1
+    hooks:
+      - id: prettier
+  # pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit
+    rev: v2.16.0
+    hooks:
+      - id: validate_manifest
+
+  # Shell script hooks
+  - repo: https://github.com/cisagov/pre-commit-shfmt
+    rev: v0.0.2
+    hooks:
+      - id: shfmt
+        args:
+          # Indent by two spaces
+          - -i
+          - "2"
+          # Binary operators may start a line
+          - -bn
+          # Switch cases are indented
+          - -ci
+          # Redirect operators are followed by a space
+          - -sr
+  - repo: https://github.com/detailyang/pre-commit-shell
+    rev: 1.0.5
+    hooks:
+      - id: shell-lint
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        exclude: ^core/
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - flake8-docstrings
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+  - repo: https://github.com/ansible-community/ansible-lint
+    rev: v5.3.2
+    hooks:
+      - id: ansible-lint

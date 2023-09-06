@@ -1,0 +1,15 @@
+[run]
+source = ['lib']
+branch = true
+omit = */adapters/*
+       */application/*
+       */infrastructure/*
+       */migrations/*
+       */__init__*.py
+       */containers.py
+       */app.py
+       test_*
+       tests/*
+
+[report]
+fail_under = 100

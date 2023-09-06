@@ -1,0 +1,42 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  requirements:
+    name: Install Requirements
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Python Requirements
+        run: |
+          pip install -r requirements/dev.txt
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Python Requirements
+        run: |
+          pip install -r requirements/dev.txt
+      - name: Run Tests
+        run: pytest
+
+  lint:
+    name: Linter Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Python Requirements
+        run: |
+          pip install -r requirements/dev.txt
+          pip install pre-commit
+          pre-commit install
+          pre-commit run --all-files
